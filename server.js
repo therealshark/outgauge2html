@@ -1,5 +1,6 @@
 'use strict';
 // TODO: Need to order and structure this a bit
+var spawn = require('open');
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Start the http server
 http.listen(config.webPort, function(){
 	console.log('HTTP Server listening on port ' + config.webPort);
+    spawn('http://127.0.0.1:'+config.webPort);
 });
 
 udpServer.on('listening', function () {

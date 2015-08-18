@@ -4,6 +4,7 @@
 	"author": "theshark",
 	"dependencies" : {
 		"express": "4.10.2",
-		"socket.io": "*"
+		"socket.io": "*",
+		"open": "*"
 	}
 }
