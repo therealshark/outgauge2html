@@ -1,6 +1,6 @@
 # outgauge2html
 
 ## Install
-Clone the repository
-install the dependencies with npm install
-be happy
+1. Clone the repository
+2. install the dependencies with npm install
+3. be happy
