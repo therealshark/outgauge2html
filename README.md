@@ -3,7 +3,7 @@
 ## Install
 Clone the Repository
 
-Install the dependencies
+To install the dependencies, run the following command in the repository root
 
     npm install
 
