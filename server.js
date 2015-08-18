@@ -1,20 +1,25 @@
 'use strict';
-// TODO: Need to order and structure this a bit
-var spawn = require('open');
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var path = require('path');
+// modules
+var spawn = require('open'),
+    express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    dgram = require('dgram'),
+    socketIO = require('socket.io');
+// server
+var app = express(),
+    httpServer = http.Server(app),
+    io = socketIO(httpServer),
+    udpServer = dgram.createSocket('udp4');
+// config
 var config = require('./config.json');
-var dgram = require('dgram');
-var udpServer = dgram.createSocket('udp4');
 
-// Static files
+
+// configure static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Start the http server
-http.listen(config.webPort, function(){
+httpServer.listen(config.webPort, function(){
 	console.log('HTTP Server listening on port ' + config.webPort);
     spawn('http://127.0.0.1:'+config.webPort);
 });
@@ -23,6 +28,7 @@ udpServer.on('listening', function () {
 	console.log('UDP Server listening on port ' + udpServer.address().port);
 });
 
+// converting the outgauge packages to JSON transmitted via Socket.IO
 udpServer.on('message', function (message) {
 	var buff = new Buffer(message);
 	var outgaugeData = {
