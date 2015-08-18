@@ -9,8 +9,7 @@ var renderStarted = false;
 // update
 socket.on('outgauge',function(data){
     // TODO: Quicky slapped together, this needs quite some work
-    data.kph = data.speed * 3.6;
-    outgaugeData = data;
+    outgaugeData = new OutGauge(data);
     updateAvailable = true;
     if(!renderStarted){
         render();
@@ -43,7 +42,7 @@ var gaugeConfig = [
         max: 8000
     },
     {
-        field: 'kph',
+        field: 'speedKPH',
         size: 300,
         units: 'km/h',
         max: 260
@@ -76,6 +75,9 @@ gaugeConfig.forEach(function(gauge){
         height:gauge.size,
         maxValue: gauge.max,
         units: gauge.units,
+        animation: false,
+        highlights: false,
+        glow: false,
         colors: {
             plate      : '#222',
             majorTicks : '#f5f5f5',
@@ -91,3 +93,23 @@ gaugeConfig.forEach(function(gauge){
     };
     g.draw();
 });
+
+
+function OutGauge(d){
+    var data = d;
+    var self = this;
+    // enrich data
+    data.speedKPH = data.speed * 3.6;
+    data.speedMPH = data.speed * 2.23694;
+    data.realGear = data.gear - 1;
+
+
+   Object.keys(data).forEach(function(key){
+       Object.defineProperty(self, key, {
+          get: function(){
+              return data[key];
+          },
+          enumerable: true
+       });
+   });
+}
