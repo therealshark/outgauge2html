@@ -34,7 +34,8 @@ udpServer.on('message', function (message) {
 	var outgaugeData = {
 		time: buff.readInt32LE(0),
 		car: buff.toString('ascii',4,7),
-		flags: buff.readUInt8(9),
+		flags: buff.readUInt16LE(8),
+		plid: buff.readUInt8(9),
 		gear: buff.readUInt8(10),
 		speed: buff.readFloatLE(12),
 		rpm: buff.readFloatLE(16),
@@ -50,7 +51,7 @@ udpServer.on('message', function (message) {
 		clutch: buff.readFloatLE(56),
         // TODO: Those aren't completly right
 		display: [
-			buff.toString('ascii', 60, 73),
+			buff.toString('ascii', 60, 75),
 			buff.toString('ascii', 76, 92)
 		]
 	};
