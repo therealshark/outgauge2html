@@ -342,7 +342,7 @@ var Gauge = function( config) {
 
 				clearInterval( iv);
 
-				drawValueBox();
+				//drawValueBox();
 				drawNeedle();
 
 				if (!imready) {
@@ -351,7 +351,7 @@ var Gauge = function( config) {
 				}
 			}, 10);
 		} else {
-			drawValueBox();
+			//drawValueBox();
 			drawNeedle();
 
 			if (!imready) {
