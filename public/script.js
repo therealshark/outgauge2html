@@ -1,37 +1,15 @@
 "use strict";
-// Socket.io init and updating data
-var socket = io.connect();
-var outgaugeData;
 var gauges = [];
-var updateAvailable = false;
-var renderStarted = false;
 
-// update
-socket.on('outgauge',function(data){
-    // TODO: Quicky slapped together, this needs quite some work
-    outgaugeData = new OutGauge(data);
-    updateAvailable = true;
-    if(!renderStarted){
-        render();
-        renderStarted = true;
-    }
+OutGauge.onRender(function(outgaugeData){
+    document.getElementById('msg').innerHTML = JSON.stringify(outgaugeData,null,'  ')
+        .replace(/\n/g,'<br>')
+        .replace(/  /g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+    // update gauges
+    gauges.forEach(function(gauge){
+        gauge.gadget.setValue(outgaugeData[gauge.field]);
+    });
 });
-
-// rendercycle
-function render(){
-    if(updateAvailable){
-        // update debug
-        document.getElementById('msg').innerHTML = JSON.stringify(outgaugeData,null,'  ')
-            .replace(/\n/g,'<br>')
-            .replace(/  /g,'&nbsp;&nbsp;&nbsp;&nbsp;');
-        // update gauges
-        gauges.forEach(function(gauge){
-            gauge.gadget.setValue(outgaugeData[gauge.field]);
-        });
-        updateAvailable = false;
-    }
-    requestAnimationFrame(render);
-}
 
 // Generate and update gauges
 var gaugeConfig = [
@@ -93,23 +71,3 @@ gaugeConfig.forEach(function(gauge){
     };
     g.draw();
 });
-
-
-function OutGauge(d){
-    var data = d;
-    var self = this;
-    // enrich data
-    data.speedKPH = data.speed * 3.6;
-    data.speedMPH = data.speed * 2.23694;
-    data.realGear = data.gear - 1;
-
-
-   Object.keys(data).forEach(function(key){
-       Object.defineProperty(self, key, {
-          get: function(){
-              return data[key];
-          },
-          enumerable: true
-       });
-   });
-}
