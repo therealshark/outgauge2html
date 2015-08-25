@@ -23,7 +23,7 @@ var gaugeConfig = [
         field: 'speedKPH',
         size: 300,
         units: 'km/h',
-        max: 250
+        max: 300
     },
     {
         field: 'clutch',
