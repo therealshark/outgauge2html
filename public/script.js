@@ -17,13 +17,13 @@ var gaugeConfig = [
         field: 'rpm',
         size: 300,
         units: 'rpm',
-        max: 8000
+        max: 10000
     },
     {
         field: 'speedKPH',
         size: 300,
         units: 'km/h',
-        max: 260
+        max: 250
     },
     {
         field: 'clutch',
@@ -47,6 +47,11 @@ var gaugeConfig = [
 
 gaugeConfig.forEach(function(gauge){
     console.log(gauge);
+    var ticks = [];
+    var fixed = gauge.max > 1 ? 0 : 1;
+    for(var i = 0; i <= 1; i += 0.2){
+        ticks.push( (gauge.max * i).toFixed(fixed) );
+    }
     var g = new Gauge({
         renderTo: gauge.field,
         width: gauge.size,
@@ -56,6 +61,7 @@ gaugeConfig.forEach(function(gauge){
         animation: false,
         highlights: false,
         glow: false,
+        majorTicks: ticks,
         colors: {
             plate      : '#222',
             majorTicks : '#f5f5f5',
