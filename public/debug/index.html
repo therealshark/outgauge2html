@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Outgauge - Debug</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/outgauge.js"></script>
+    <style>
+        body{
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div id="msg">No data</div>
+    <script>
+        OutGauge.onRender(function(outgaugeData){
+            document.getElementById('msg').innerHTML = JSON.stringify(outgaugeData,null,'  ')
+                    .replace(/\n/g,'<br />')
+                    .replace(/  /g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+        });
+    </script>
+</body>
+</html>

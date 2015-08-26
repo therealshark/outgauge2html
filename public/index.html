@@ -2,22 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Outgauge</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="socket.io/socket.io.js"></script>
-    <script src="gauge.js"></script>
-    <script src="outgauge.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
+    <title></title>
 </head>
 <body>
-    <div id="msg">No data</div>
-    <canvas id="rpm"></canvas>
-    <canvas id="speedKPH"></canvas>
-    <br />
-    <canvas id="clutch"></canvas>
-    <canvas id="brake"></canvas>
-    <canvas id="throttle"></canvas>
+    <h1>Select the visualization</h1>
+    <ul id="list">
 
-    <script src="script.js"></script>
+    </ul>
+    <script>
+        var vis = ['debug', 'gauges']; // TODO: make this dynamic
+
+        var html = '';
+        vis.forEach(function(v){
+            html += '<li><a href="/'+v+'">'+v+'</a></li>';
+        });
+        document.getElementById('list').innerHTML = html;
+    </script>
 </body>
 </html>
