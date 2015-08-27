@@ -5,7 +5,8 @@ var spawn = require('open'),
     http = require('http'),
     path = require('path'),
     dgram = require('dgram'),
-    socketIO = require('socket.io');
+    socketIO = require('socket.io'),
+    fs = require('fs');
 // server
 var app = express(),
     httpServer = http.Server(app),
@@ -18,7 +19,18 @@ var config = require('./config.json');
 // configure static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Start the http server
+// dynamic frontendlist
+app.get('/frontendlist', function(req, res){
+    res.send(
+        JSON.stringify(
+            fs.readdirSync('public').filter(function(file){
+                return fs.statSync(path.join('public', file)).isDirectory() && file != 'bower_components';
+            })
+        )
+    );
+});
+
+// start the http server
 httpServer.listen(config.webPort, function(){
 	console.log('HTTP Server listening on port ' + config.webPort);
     spawn('http://127.0.0.1:'+config.webPort);

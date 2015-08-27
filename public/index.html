@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.getJSON('/frontendlist', function(vis){
+                var html = '';
+                vis.forEach(function(v){
+                    html += '<li><a href="/'+v+'">'+v+'</a></li>';
+                });
+                document.getElementById('list').innerHTML = html;
+            })
+        });
+    </script>
 </head>
 <body>
     <h1>Select the visualization</h1>
     <ul id="list">
 
     </ul>
-    <script>
-        var vis = ['debug', 'gauges']; // TODO: make this dynamic
-
-        var html = '';
-        vis.forEach(function(v){
-            html += '<li><a href="/'+v+'">'+v+'</a></li>';
-        });
-        document.getElementById('list').innerHTML = html;
-    </script>
 </body>
 </html>
