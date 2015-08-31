@@ -30,12 +30,12 @@ window.OutGauge = (function(){
     function OutGaugeWrapper(d){
         // bit constants
         var OG = {
-            OG_SHIFT: 1,
-            OG_CTRL: 2,
+            SHIFT: 256,
+            CTRL: 512,
 
-            OG_TURBO: 8192,
-            OG_KM: 16384,
-            OG_BAR: 32786
+            TURBO: 8192,
+            KM: 16384,
+            BAR: 32786
         };
         var DL = {
             SHIFT: 1,
@@ -76,7 +76,13 @@ window.OutGauge = (function(){
                 }
             });
         });
-
+        // flags
+        data.flagsActive = [];
+        Object.keys(OG).forEach(function(key){
+            if(data.flags & OG[key]){
+                data.flagsActive.push(key);
+            }
+        });
 
 
         Object.keys(data).forEach(function(key){
