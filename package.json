@@ -1,10 +1,10 @@
 {
-	"name": "nodewebkit-outgauge-bridge",
-	"description": "Bridge between udp outgauge packets and websockets. Also serves a html5 client visualizing the obtained data.",
-	"author": "theshark",
-	"dependencies" : {
-		"express": "4.10.2",
-		"socket.io": "*",
-		"open": "*"
-	}
+  "name": "nodewebkit-outgauge-bridge",
+  "description": "Bridge between udp outgauge packets and websockets. Also serves a html5 client visualizing the obtained data.",
+  "author": "theshark",
+  "dependencies": {
+    "express": "4.15.2",
+    "socket.io": "*",
+    "open": "*"
+  }
 }
