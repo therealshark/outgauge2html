@@ -3,7 +3,7 @@
   "description": "Bridge between udp outgauge packets and websockets. Also serves a html5 client visualizing the obtained data.",
   "author": "theshark",
   "dependencies": {
-    "express": "4.15.3",
+    "express": "4.16.0",
     "socket.io": "*",
     "open": "*"
   }
